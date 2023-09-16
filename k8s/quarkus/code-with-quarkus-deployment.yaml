@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: code-with-quarkus-deployment
+ namespace: quarkus
  labels:
   app: code-with-quarkus
 spec:
@@ -17,7 +18,7 @@ spec:
   spec:
    containers:
     - name: code-with-quarkus
-      image: quarkus/code-with-quarkus-jvm:0.0.1
+      image: quarkus/code-with-quarkus-jvm:latest
       ports:
        - containerPort: 8080
       imagePullPolicy: IfNotPresent

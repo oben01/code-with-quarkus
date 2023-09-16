@@ -2,7 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
  name: code-with-quarkus-cm
+ namespace: quarkus
 data:
- quarkus.mongodb.connection.string: 'bW9uZ29kYjovL2FkbWluOmFkbWluQGxvY2FsaG9zdDoyNzAxNw=='
+ quarkus.mongodb.connection.string: 'mongodb://admin:admin@localhost:27017'
 
   
