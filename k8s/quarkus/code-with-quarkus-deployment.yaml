@@ -27,6 +27,11 @@ spec:
          valueFrom:
           configMapKeyRef:
            name: code-with-quarkus-cm
-           key: quarkus.mongodb.connection.string
+           key: quarkus.mongodb.connection-string
+       - name: MONGODB_DATABASE
+         valueFrom:
+          configMapKeyRef:
+           name: code-with-quarkus-cm
+           key: quarkus.mongodb.database
    restartPolicy: Always
       

@@ -8,14 +8,12 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: my-app.com
-      http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: code-with-quarkus-service
-                port:
-                  number: 8080
-                
+      - http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: code-with-quarkus-service
+                  port:
+                    number: 8080
