@@ -4,5 +4,7 @@ metadata:
  name: code-with-quarkus-cm
  namespace: quarkus
 data:
- quarkus.mongodb.connection-string: 'mongodb://admin:admin@localhost:27017'
+ quarkus.mongodb.connection-string: 'mongodb://admin:admin@mongodb-service.database.svc.cluster.local:27017'
  quarkus.mongodb.database: 'quarkus'
+
+  
