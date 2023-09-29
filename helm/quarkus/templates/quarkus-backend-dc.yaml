@@ -42,16 +42,21 @@ spec:
               path: {{ .Values.backend.probe.readiness.path }}
               port: {{ .Values.backend.probe.readiness.port }}
           env:
-            - name: MONGODB_URI
+          {{- if .Values.envs }}
+          {{- range .Values.envs }}
+            - name: {{ .name }}
+              value: {{ .value }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.EnvVarsConfigMap }}
+          {{- range .Values.EnvVarsConfigMap }}
+            - name: {{ .name }}
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "quarkus.fullname" . }}-cm
-                  key: quarkus.mongodb.connection-string
-            - name: MONGODB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "quarkus.fullname" . }}-cm
-                  key: quarkus.mongodb.database
+                  name: {{ include "quarkus.fullname" $ }}-cm
+                  key: {{ .key }}
+          {{- end }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
