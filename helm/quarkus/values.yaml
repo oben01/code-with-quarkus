@@ -99,3 +99,41 @@ backend: {
     }
   }
 }
+
+mongodb:
+  internal: true
+  auth:
+    enabled: true
+    rootUser: admin
+    rootPassword: admin
+    usernames:
+      - admin
+    databases:
+      - quarkus
+  service:
+    nameOverride: mongodb
+  persistence:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  podSecurityContext:
+    enabled: false
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 750Mi
+    limits:
+      cpu: 200m
+      memory: 750Mi
+  tls:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 750Mi
+      limits:
+        cpu: 200m
+        memory: 750Mi
