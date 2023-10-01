@@ -57,6 +57,39 @@ Easily start your Reactive RESTful Web Services
 
 
 ## K8s 
+
+1. Add `chart-example.local` to your local host
+```bash
+sudo nano /etc/hosts
+127.0.0.1       chart-example.local
 ```
+2. Forward the nginx controller port (Only for tests purpose)
+
+```bash
 kubectl -n ingress-nginx port-forward svc/ingress-nginx-controller 8888:80
+```
+
+## Helm :
+
+### generate helm template
+
+```bash
+helm template ./helm/quarkus
+```
+
+### Package
+
+```bash
+helm package ./helm/quarkus -d ./helm/quarkus
+```
+
+### Install
+
+```bash
+helm install quarkus ./helm/quarkus/quarkus-0.1.0.tgz --namespace quarkus --create-namespace
+```
+
+### Uninstall
+```bash
+helm uninstall quarkus
 ```

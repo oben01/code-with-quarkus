@@ -37,10 +37,14 @@ spec:
             httpGet:
               path: {{ .Values.backend.probe.liveness.path }}
               port: {{ .Values.backend.probe.liveness.port }}
+            initialDelaySeconds: {{ .Values.backend.probe.liveness.initialDelaySeconds }}
+            periodSeconds : {{ .Values.backend.probe.liveness.periodSeconds }}
           readinessProbe:
             httpGet:
               path: {{ .Values.backend.probe.readiness.path }}
               port: {{ .Values.backend.probe.readiness.port }}
+            initialDelaySeconds: {{ .Values.backend.probe.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.backend.probe.readiness.periodSeconds }}
           env:
           {{- if .Values.envs }}
           {{- range .Values.envs }}

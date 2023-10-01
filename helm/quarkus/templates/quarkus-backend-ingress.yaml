@@ -1,5 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "quarkus.fullname" . -}}
+{{- $ingressName := printf "%s-ingress" $fullName -}}
 {{- $serviceName := printf "%s-service" $fullName -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
@@ -16,7 +17,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
- name: {{ $fullName }}
+ name: {{ $ingressName }}
  labels:
     {{- include "quarkus.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
