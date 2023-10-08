@@ -74,6 +74,10 @@ kubectl -n ingress-nginx port-forward svc/ingress-nginx-controller 8888:80
 ### generate helm template
 
 ```bash
+helm helm dependency build
+```
+
+```bash
 helm template ./helm/quarkus
 ```
 
