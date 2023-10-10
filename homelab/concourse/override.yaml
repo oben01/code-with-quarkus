@@ -1,0 +1,179 @@
+concourse:
+ ## Configurations for the `web` component based on the possible flags configurable
+ ## through the `concourse web` command.
+ ##
+ web:
+  tls:
+   ## Enable serving HTTPS traffic directly through the web component.
+   ##
+   enabled: false
+
+   ## Port on which to listen for HTTPS traffic.
+   ##
+   bindPort: 443
+
+  ## URL used to reach any ATC from the outside world.
+  ## This is *very* important for a proper authentication workflow as
+  ## browser redirects are based on the value set here.
+  ##
+  ## Example: http://ci.concourse-ci.org
+  ##
+  externalUrl: http://concourse.homelab.local
+
+  encryption:
+   ## Enable encryption of pipeline configuration. Encryption keys can be set via secrets
+   ## (`encryption-key` and `old-encryption-key` fields).
+   ## Ref: https://concourse-ci.org/encryption.html
+   ##
+   enabled: false
+
+  localAuth:
+   ## Enable the use of local authentication (basic auth).
+   ## Once enabled, users configured through `local-users` (secret)
+   ## are able to authenticate.
+   ##
+   ## Local users can be individually added to the `main` team by setting
+   ## `concourse.web.auth.mainTeam.localUser` with a comma-separated list
+   ## of ids.
+   ##
+   ## Ref: https://concourse-ci.org/local-auth.html
+   ##
+   enabled: true
+  kubernetes:
+   ## Enable the use of Kubernetes Secrets as the credential provider for
+   ## concourse pipelines.
+   ##
+   enabled: true
+
+   ## Prefix to use for Kubernetes namespaces under which secrets will be looked up.
+   ## Defaults to the Release (https://helm.sh/docs/glossary/#release) name
+   ## hyphen, e.g. "my-release-" produces namespace "my-release-main" for
+   ## the "main" Concourse team.
+   namespacePrefix:
+
+   ## Teams to create namespaces for to hold secrets.
+   ## This property only has effect if `createTeamNamespaces` is set to `true`.
+   ##
+   teams:
+    - main
+    - homelab
+
+   ## Create the Kubernetes namespace for each team listed under `concourse.web.kubernetes.teams`.
+   ##
+   createTeamNamespaces: true
+
+   ## When true, namespaces are not deleted when the release is deleted.
+   ## Irrelevant if the namespaces are not created by this chart.
+   ##
+   keepNamespaces: true
+
+   ## Path to Kubernetes config when running ATC outside Kubernetes.
+   ##
+   configPath:
+
+  auth:
+   ## The connector to use for password authentication for `fly login -u ... -p ...`.
+   ## Either "local" or "ldap". Defaults to "local".
+   passwordConnector:
+
+   mainTeam:
+
+    ## Configuration file for specifying the main teams params.
+    ## Ref: https://concourse-ci.org/managing-teams.html#setting-roles
+    ## Example:
+    ## config: |
+    ##   roles:
+    ##   - name: owner
+    ##     local:
+    ##       users: ["admin"]
+    ##   - name: member
+    ##     local:
+    ##       users: ["test"]
+    ##
+    config: ""
+
+    ## Comma-separated list of local Concourse users to be included as members of the `main` team.
+    ## Make sure you have local users support enabled (`concourse.web.localAuth.enabled`) and
+    ## that the users were added (`secrets.localUsers`).
+    ##
+    localUser: "root"
+
+   ## Authentication (GitLab)
+   gitlab:
+    enabled: true
+
+    ## Hostname of Gitlab Enterprise deployment (Include scheme, No trailing slash)
+    ##
+    host: https://gitlab.homelab.local
+
+  letsEncrypt:
+   ## Automatically configure TLS certificates via Let's Encrypt/ACME.
+   ##
+   enabled: false
+
+   ## URL of the ACME CA directory endpoint.
+   ##
+   acmeURL:
+ worker:
+  runtime: containerd
+
+## Configuration values for Concourse Web components.
+## For more information regarding the characteristics of
+## Concourse Web nodes, see https://concourse-ci.org/concourse-web.html.
+##
+web:
+ ## Ingress configuration.
+ ## Ref: https://kubernetes.io/docs/user-guide/ingress/
+ ##
+ ingress:
+  ## Enable Ingress.
+  ##
+  enabled: false
+
+  ## Annotations to be added to the web ingress.
+  ## Example:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   kubernetes.io/tls-acme: 'true'
+  ##
+  annotations: {}
+
+  ## Hostnames.
+  ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
+  ## `hosts` sets up the Ingress with default rules per provided hostname.
+  hosts:
+
+  ## Ingress class name
+  ## Should match the name of the IngressClass. If left unset, will select the default IngressClass.
+  ingressClassName:
+
+  ## Ingress rules override
+  ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
+  ## `rulesOverride` allows the user to define the full set of ingress rules, for more complex Ingress setups.
+  rulesOverride:
+
+  ## TLS configuration.
+  ## Secrets must be manually created in the namespace.
+  ## Example:
+  ##   - secretName: concourse-web-tls
+  ##     hosts:
+  ##       - concourse.domain.com
+  ##
+  tls:
+
+   ## Enable serving HTTPS traffic directly through the web component.
+   ##
+   enabled: true
+
+   ## Port on which to listen for HTTPS traffic.
+   ##
+   bindPort: 443
+
+secrets:
+ ## List of `username:password` or `username:bcrypted_password` combinations for all your local concourse users.
+ ## For details of expected format, see https://concourse-ci.org/local-auth.html
+ ##
+ localUsers: "root:root"
+ ## Secrets for GitLab OAuth.
+ ##
+ gitlabClientId: 60b418d06eb8af29e517357529af91906be44d4bef57e7cad30099da0cb47b68
+ gitlabClientSecret: gloas-0be0ac63c7bff7742f5de9000fff0df421cb6df9d30c8a8668c8d7e7d58d6a95

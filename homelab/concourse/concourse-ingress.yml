@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ name: concourse-ingress
+ namespace: concourse
+ annotations:
+  nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+ ingressClassName: nginx
+ rules:
+  - host: "concourse.homelab.local"
+    http:
+     paths:
+      - path: /
+        pathType: Prefix
+        backend:
+         service:
+          name: concourse-web
+          port:
+           number: 8080
