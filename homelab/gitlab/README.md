@@ -7,8 +7,13 @@ helm upgrade --install gitlab gitlab/gitlab -n gitlab --create-namespace \
   --set certmanager.rbac.create=false \
   --set nginx-ingress.rbac.createRole=false \
   --set prometheus.rbac.create=false \
-  --set gitlab-runner.rbac.create=false
+  --set gitlab-runner.rbac.create=false \
+  global.hosts.https
 ```
 
 gitlab-webservice-default.gitlab.svc.cluster.local
 concourse-web.concourse.svc.cluster.local:8080
+
+```bash
+helm upgrade gitlab gitlab/gitlab -n gitlab --values override.yaml
+```

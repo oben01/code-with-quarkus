@@ -1,0 +1,31 @@
+global:
+ hosts:
+  domain: homelab.local
+  https: false
+#  gitlab:
+#   name: gitlab.homelab.local
+#   https: false
+ edition: ce
+ ingress:
+  enabled: true
+  tls:
+   enabled: false
+
+certmanager-issuer:
+ email: oussama.dahmaz@gmail.com
+
+certmanager:
+ rbac:
+  create: false
+
+nginx-ingress:
+ rbac:
+  createRole: false
+
+prometheus:
+ rbac:
+  create: false
+
+gitlab-runner:
+ rbac:
+  create: false

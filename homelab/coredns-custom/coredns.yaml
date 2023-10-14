@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: coredns-custom
+ namespace: kube-system
+data:
+ rewrite.override: |
+  rewrite name regex gitlab\.homelab\.local gitlab-nginx-ingress-controller.gitlab.svc.cluster.local
+  rewrite name regex (.+)\.homelab\.local ingress-nginx-controller.ingress-nginx.svc.cluster.local

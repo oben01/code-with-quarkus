@@ -116,6 +116,61 @@ concourse:
    acmeURL:
  worker:
   runtime: containerd
+  containerd:
+
+   ## Path to a containerd executable (non-absolute names get resolved from $PATH)."`
+   bin:
+
+   ## Path to a config file to use for the Containerd daemon.
+   config:
+
+   ## Enable a proxy DNS server for Garden. Note: this implicitly turns on container access to host network.
+   dnsProxyEnable:
+
+   ## MTU size for container network interfaces. Defaults to the MTU of the interface used for outbound access by the host
+   mtu:
+
+   ## IP address to use to reach container's mapped ports. Autodetected if not specified.
+   externalIP:
+
+   ## List of DNS server IP addresses to use instead of automatically determined servers.
+   ## Example:
+   ## dnsServers:
+   ##   - 1.1.1.1
+   ##   - 2.2.2.2
+   dnsServers: []
+
+   ## List of network ranges to which traffic from containers will be restricted.
+   ## Example:
+   ## restrictedNetworks:
+   ##   - 1.1.1.1
+   ##   - 2.2.2.2
+   restrictedNetworks: [ ]
+
+   ## Allows containers to reach host network.
+   allowHostAccess:
+
+   ## Maximum container capacity. 0 means no limit. Defaults to 250.
+   maxContainers:
+
+   ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"
+   ##
+   networkPool:
+
+   ## Time to wait for requests to Containerd to complete. 0 means no timeout.
+   requestTimeout:
+
+   ## Path to a dumb init executable, defaults to /usr/local/concourse/bin/init
+   initBin:
+
+   ## Path to the oci hooks dir, defaults to none
+   ociHooksDir:
+
+   ## Path to a seccomp filter override, defaults to a restrictive default set
+   seccompProfile:
+
+   ## Path to CNI network plugins, defaults to /usr/local/concourse/bin
+   cniPluginsDir:
 
 ## Configuration values for Concourse Web components.
 ## For more information regarding the characteristics of
@@ -162,7 +217,7 @@ web:
 
    ## Enable serving HTTPS traffic directly through the web component.
    ##
-   enabled: true
+   enabled: false
 
    ## Port on which to listen for HTTPS traffic.
    ##
@@ -175,5 +230,5 @@ secrets:
  localUsers: "root:root"
  ## Secrets for GitLab OAuth.
  ##
- gitlabClientId: 60b418d06eb8af29e517357529af91906be44d4bef57e7cad30099da0cb47b68
- gitlabClientSecret: gloas-0be0ac63c7bff7742f5de9000fff0df421cb6df9d30c8a8668c8d7e7d58d6a95
+ gitlabClientId: 9da94ccfe8de2179f05981655758ea7127e6082e29c71d6514fa72713a27086d
+ gitlabClientSecret: gloas-3d6c7c236403e63cb38f307345dfe68295acdae91a8a6382aa20eeda8559f855
